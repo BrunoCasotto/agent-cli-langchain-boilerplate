@@ -1,8 +1,9 @@
 import { Command, CommandRunner } from "nest-commander";
 import * as readline from "readline";
-import { agent } from "../../agents/example.agent.js";
 import { LoggerGateway } from "../logger/logger.gateway.js";
 import { GenerateHumanMessageUseCase } from "../../usecases/generateHumanMessage.usecase.js";
+import { ExampleAgent } from "../../agents/example.agent.js";
+import { createFileTool } from "../../tools/example.tool.js";
 
 @Command({
   name: "chat",
@@ -42,8 +43,9 @@ export class AgentCommander extends CommandRunner {
 
         try {
           this.logger.log("Pensando...");
+          const agentInstance = new ExampleAgent([createFileTool]);
 
-          const response = await agent.invoke(
+          const response = await agentInstance.agent.invoke(
             { messages: [this.generateHumanMessageUseCase.execute(cleanInput)] },
             config
           );
