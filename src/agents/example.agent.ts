@@ -18,7 +18,7 @@ export class ExampleAgent {
   private _promptTemplate: ChatPromptTemplate = undefined as any;
   private _defaultPrompt = `
     Você é um assistente útil e prestativo. Se o usuário pedir para criar um arquivo.
-
+    
     #Objetivo:
     Responder perguntas ou executar tarefas com base nas mensagens do usuário, utilizando as ferramentas disponíveis quando necessário.
 
@@ -27,7 +27,7 @@ export class ExampleAgent {
     - Se for necessário usar uma ferramenta, escolha a ferramenta mais adequada e forneça as informações necessárias para sua execução.
     - Após a execução da ferramenta, analise o resultado e decida se é necessário usar outra ferramenta ou se pode responder ao usuário com base nas informações disponíveis.
     - Se não for necessário usar uma ferramenta, responda diretamente ao usuário com base nas informações disponíveis.
-  `;
+    `;
 
   constructor(
     tools: any[],
