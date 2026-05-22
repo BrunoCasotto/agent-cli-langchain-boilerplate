@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from "@nestjs/common";
-import * as clc from "cli-color";
+import clc from "cli-color";
 
 @Injectable()
 export class LoggerGateway extends ConsoleLogger {

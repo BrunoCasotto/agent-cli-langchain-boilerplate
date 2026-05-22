@@ -2,14 +2,17 @@ import { Command, CommandRunner } from "nest-commander";
 import * as readline from "readline";
 import { agent } from "../../agents/example.agent.js";
 import { LoggerGateway } from "../logger/logger.gateway.js";
-import { HumanMessage } from "@langchain/core/messages";
+import { GenerateHumanMessageUseCase } from "../../usecases/generateHumanMessage.usecase.js";
 
 @Command({
   name: "chat",
   description: "Inicia uma sessão de chat interativo com o agente de IA",
 })
 export class AgentCommander extends CommandRunner {
-  constructor(private readonly logger: LoggerGateway) {
+  constructor(
+    private readonly logger: LoggerGateway,
+    private readonly generateHumanMessageUseCase: GenerateHumanMessageUseCase
+  ) {
     super();
   }
 
@@ -39,15 +42,15 @@ export class AgentCommander extends CommandRunner {
 
         try {
           this.logger.log("Pensando...");
-          
+
           const response = await agent.invoke(
-            { messages: [new HumanMessage(cleanInput)] },
+            { messages: [this.generateHumanMessageUseCase.execute(cleanInput)] },
             config
           );
 
           const messages = response.messages;
           const lastMessage = messages[messages.length - 1];
-          
+
           if (lastMessage && lastMessage.content) {
             this.logger.logAgent(`Agente: ${lastMessage.content}`);
           } else {

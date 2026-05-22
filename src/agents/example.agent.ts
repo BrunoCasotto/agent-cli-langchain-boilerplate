@@ -14,7 +14,7 @@ const tools = [createFileTool];
 const toolNode = new ToolNode(tools);
 
 const model = new ChatOllama({
-  model: process.env.OLLAMA_MODEL || "deepseek-r1:8b",
+  model: process.env.OLLAMA_MODEL || "gemma4:latest",
   temperature: 0,
 }).bindTools(tools);
 
