@@ -1,28 +1,35 @@
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import nodePath from "path";
+
+interface CreateFileInput {
+  path: string;
+  content: string;
+}
 
 export const createFileTool = tool(
-  async ({ path: filePath, content }) => {
+  async ({ path, content }: CreateFileInput): Promise<string> => {
     try {
-      const resolvedPath = path.resolve(filePath);
-      const dir = path.dirname(resolvedPath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+      if (!path || !content) {
+        throw new Error("Path and content are required to create a file.");
       }
-      fs.writeFileSync(resolvedPath, content, "utf-8");
-      return `Arquivo criado com sucesso em: ${resolvedPath}`;
-    } catch (error: any) {
-      return `Erro ao criar o arquivo: ${error.message}`;
+
+      const folder = nodePath.dirname(path);
+      fs.mkdirSync(folder, { recursive: true });
+      fs.writeFileSync(path, content);
+      return `File created: ${path}`;
+    } catch (error) {
+      console.error("Error creating file:", error);
+      return `Failed to create file: ${error instanceof Error ? error.message : String(error)}`;
     }
   },
   {
     name: "createFileTool",
-    description: "Cria um arquivo no caminho especificado com o conteúdo fornecido.",
+    description: "Create a new file at the specified path using the provided content.",
     schema: z.object({
-      path: z.string().describe("O caminho completo para o arquivo (ex: roteiros/roteiro_tcp-ip.md)"),
-      content: z.string().describe("O conteúdo de texto completo do arquivo"),
+      path: z.string().max(300).describe("The full path where the file will be created, including folder and extension."),
+      content: z.string().describe("The content to be written in the file."),
     }),
-  }
+  },
 );

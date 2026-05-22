@@ -10,14 +10,18 @@ import { createFileTool } from "../../tools/example.tool.js";
   description: "Inicia uma sessão de chat interativo com o agente de IA",
 })
 export class AgentCommander extends CommandRunner {
+  private readonly _agentInstance: ExampleAgent;
+
   constructor(
     private readonly logger: LoggerGateway,
     private readonly generateHumanMessageUseCase: GenerateHumanMessageUseCase
   ) {
     super();
+    this._agentInstance = new ExampleAgent([createFileTool]);
   }
 
   async run(): Promise<void> {
+    let loader: NodeJS.Timeout | null = null;
     this.logger.log("Iniciando chat com o agente... Digite 'exit' ou 'sair' para encerrar.");
 
     const rl = readline.createInterface({
@@ -42,10 +46,8 @@ export class AgentCommander extends CommandRunner {
         }
 
         try {
-          this.logger.log("Pensando...");
-          const agentInstance = new ExampleAgent([createFileTool]);
-
-          const response = await agentInstance.agent.invoke(
+          loader = this.logger.loaderAnimation("");
+          const response = await this._agentInstance.agent.invoke(
             { messages: [this.generateHumanMessageUseCase.execute(cleanInput)] },
             config
           );
@@ -60,6 +62,10 @@ export class AgentCommander extends CommandRunner {
           }
         } catch (error: any) {
           this.logger.error(`Erro ao processar mensagem: ${error.message}`);
+        } finally {
+          if (loader) {
+            this.logger.stopLoaderAnimation(loader);
+          }
         }
 
         askQuestion();

@@ -33,4 +33,17 @@ export class LoggerGateway extends ConsoleLogger {
   logAgent(message: string): void {
     console.log(clc.cyanBright(message));
   }
+
+  loaderAnimation(message: string): NodeJS.Timeout {
+    const frames = ["⣾", "⣷", "⣯", "⣟", "⣻", "⣽", "⣾"];
+    let i = 0;
+    return setInterval(() => {
+      process.stdout.write(`\r${frames[i % frames.length]} ${message}`);
+      i++;
+    }, 100);
+  }
+
+  stopLoaderAnimation(loader: NodeJS.Timeout): void {
+    clearInterval(loader);
+  }
 }
