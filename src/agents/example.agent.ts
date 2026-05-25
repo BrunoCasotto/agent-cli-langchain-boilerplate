@@ -8,7 +8,7 @@ import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { ChatOllama } from "@langchain/ollama";
 import { MemorySaver } from "@langchain/langgraph";
-import { LoggerGateway } from "../gateways/logger/logger.gateway.js";
+import { LoggerGateway } from "../gateways/logger.gateway.js";
 
 export class ExampleAgent {
   private _logger: LoggerGateway;

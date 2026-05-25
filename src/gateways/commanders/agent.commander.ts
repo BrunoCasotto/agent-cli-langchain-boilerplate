@@ -1,6 +1,6 @@
 import { Command, CommandRunner } from "nest-commander";
 import * as readline from "readline";
-import { LoggerGateway } from "../logger/logger.gateway.js";
+import { LoggerGateway } from "../logger.gateway.js";
 import { GenerateHumanMessageUseCase } from "../../usecases/generateHumanMessage.usecase.js";
 import { ExampleAgent } from "../../agents/example.agent.js";
 import { createFileTool } from "../../tools/example.tool.js";
