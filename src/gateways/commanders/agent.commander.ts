@@ -3,7 +3,7 @@ import * as readline from "readline";
 import { LoggerGateway } from "../logger.gateway.js";
 import { GenerateHumanMessageUseCase } from "../../usecases/generateHumanMessage.usecase.js";
 import { ExampleAgent } from "../../agents/example.agent.js";
-import { createFileTool } from "../../tools/example.tool.js";
+import { createFileTool } from "../tools/createFileTool.tool.js";
 
 @Command({
   name: "chat",
