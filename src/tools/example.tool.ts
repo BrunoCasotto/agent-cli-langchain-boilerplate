@@ -18,7 +18,7 @@ export const createFileTool = tool(
       const folder = nodePath.dirname(path);
       fs.mkdirSync(folder, { recursive: true });
       fs.writeFileSync(path, content);
-      return `File created: ${path}`;
+      return `File has been created at folder: ${path}`;
     } catch (error) {
       console.error("Error creating file:", error);
       return `Failed to create file: ${error instanceof Error ? error.message : String(error)}`;
