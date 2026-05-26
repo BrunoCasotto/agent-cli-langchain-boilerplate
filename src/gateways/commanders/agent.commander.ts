@@ -7,7 +7,7 @@ import { createFileTool } from "../tools/createFileTool.tool.js";
 
 @Command({
   name: "chat",
-  description: "Inicia uma sessão de chat interativo com o agente de IA",
+  description: "Starts an interactive chat session with the AI agent",
 })
 export class AgentCommander extends CommandRunner {
   private readonly _agentInstance: ExampleAgent;
@@ -22,7 +22,7 @@ export class AgentCommander extends CommandRunner {
 
   async run(): Promise<void> {
     let loader: NodeJS.Timeout | null = null;
-    this.logger.log("Iniciando chat com o agente... Digite 'exit' ou 'sair' para encerrar.");
+    this.logger.log("Starting chat with the agent... Type 'exit' or 'sair' to quit.");
 
     const rl = readline.createInterface({
       input: process.stdin,
@@ -33,7 +33,7 @@ export class AgentCommander extends CommandRunner {
     const config = { configurable: { thread_id } };
 
     const askQuestion = () => {
-      rl.question(this.logger.formatPrompt("Você: "), async (input) => {
+      rl.question(this.logger.formatPrompt("You: "), async (input) => {
         const cleanInput = input.trim();
         if (cleanInput.toLowerCase() === "exit" || cleanInput.toLowerCase() === "sair") {
           rl.close();
@@ -56,12 +56,12 @@ export class AgentCommander extends CommandRunner {
           const lastMessage = messages[messages.length - 1];
 
           if (lastMessage && lastMessage.content) {
-            this.logger.logAgent(`Agente: ${lastMessage.content}`);
+            this.logger.logAgent(`Agent: ${lastMessage.content}`);
           } else {
-            this.logger.warn("O agente não retornou nenhuma resposta textual.");
+            this.logger.warn("The agent did not return any textual response.");
           }
         } catch (error: any) {
-          this.logger.error(`Erro ao processar mensagem: ${error.message}`);
+          this.logger.error(`Error processing message: ${error.message}`);
         } finally {
           if (loader) {
             this.logger.stopLoaderAnimation(loader);

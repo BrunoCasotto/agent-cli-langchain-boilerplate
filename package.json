@@ -1,7 +1,7 @@
 {
   "name": "cli_chat_boilerplate",
   "version": "1.0.0",
-  "description": "Boilerplate para criação de agentes utilizando cli e chat",
+  "description": "Boilerplate for building CLI chat agents",
   "main": "dist/main.js",
   "bin": {
     "cli-chat": "./dist/main.js"

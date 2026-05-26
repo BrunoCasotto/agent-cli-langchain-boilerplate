@@ -17,16 +17,16 @@ export class ExampleAgent {
   private _agent: any;
   private _promptTemplate: ChatPromptTemplate = undefined as any;
   private _defaultPrompt = `
-    Você é um assistente útil e prestativo. Se o usuário pedir para criar um arquivo.
+    You are a helpful and attentive assistant. If the user asks to create a file, use the appropriate tool.
     
-    #Objetivo:
-    Responder perguntas ou executar tarefas com base nas mensagens do usuário, utilizando as ferramentas disponíveis quando necessário.
+    #Goal:
+    Answer questions or perform tasks based on the user's messages, using available tools when necessary.
 
-    ## Cadeira de pensamento
-    - Sempre que receber uma mensagem do usuário, analise se é necessário usar uma ferramenta para responder ou executar a tarefa.
-    - Se for necessário usar uma ferramenta, escolha a ferramenta mais adequada e forneça as informações necessárias para sua execução.
-    - Após a execução da ferramenta, analise o resultado e decida se é necessário usar outra ferramenta ou se pode responder ao usuário com base nas informações disponíveis.
-    - Se não for necessário usar uma ferramenta, responda diretamente ao usuário com base nas informações disponíveis.
+    ## Chain of thought
+    - Whenever you receive a user message, determine whether a tool is needed to answer or execute the task.
+    - If a tool is needed, choose the most appropriate one and provide the details required for execution.
+    - After tool execution, analyze the result and decide whether another tool is needed or if you can respond directly using the available information.
+    - If a tool is not needed, respond directly to the user using the available information.
     `;
 
   constructor(
@@ -40,7 +40,7 @@ export class ExampleAgent {
     this._compileTemplate(instructions);
     this._compileWorkflow(tools);
 
-    this._logger.debug(`Agente inicializado com modelo: ${model} e ferramentas: ${tools.map((t) => t.name).join(", ")}`);
+    this._logger.debug(`Agent initialized with model: ${model} and tools: ${tools.map((t) => t.name).join(", ")}`);
   }
 
   private _instanceAgent(tools: any[], model: string): ChatOllama {

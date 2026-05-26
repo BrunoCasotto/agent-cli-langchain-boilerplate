@@ -1,17 +1,17 @@
 # Cli Chat Boilerplate
 
-Boilerplate simples para construção de agentes de IA CLI utilizando Typescript, Ollama, Langchain e commander.
+A simple boilerplate for building CLI AI agents using TypeScript, Ollama, LangChain, and Commander.
 
-![Exemplo de execução](./docs/example_chat.png)
+![Example run](./docs/example_chat.png)
 
-## Instalação
+## Installation
 
 ```bash
 nvm use
 npm install
 ```
 
-## Execução
+## Run
 
 ```bash
 npm run execute chat
